@@ -1,12 +1,15 @@
 import React, {useState} from 'react'
 import {
-  Button, Container, Row, Col,
-  Nav, NavItem, NavLink,
+  Container, Row, Col,
+  Button, Input, Form, FormGroup,
+  Nav, NavItem, NavLink, Spinner,
   Collapse, Navbar, NavbarBrand, NavbarToggler,
+  Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap'
 import {useAsync} from 'react-async-hook'
 import './Home.css'
 import useEth from './web3/eth'
+import deploy from './web3/deploy'
 
 function App() {
   const [collapsed, setCollapsed] = useState(true)
@@ -17,15 +20,28 @@ function App() {
     if (!eth) return
     setNetwork(await eth.net.getNetworkType())
   }, [eth])
-  const disks = {
+  const [disks, setDisks] = useState({
     rinkeby: [
       {
         label: 'Public disk',
         address: '0x5Cf933FA84CBada4D17f4CAC9278BF3A1a09c741',
       },
     ],
+  })
+  const [showCreateDisk, setShowCreateDisk] = useState(false)
+  const [deployBusy, setDeployBusy] = useState(false)
+  async function handleCreateDisk(label) {
+    setDeployBusy(true)
+    try {
+      const address = await deploy()
+      setDisks({
+        ...disks,
+        [network]: [...disks[network], {label, address}]
+      })
+    } catch (e) {}
+    setDeployBusy(false)
   }
-  function loadDisk() {
+  function handleLoadDisk() {
     window.location = `/explore/${address}`
   }
   return (
@@ -93,7 +109,11 @@ function App() {
               <p>
                 Current network: {network}
               </p>
-              <select size="8" onChange={e => setAddress(e.target.value)}>
+              <select
+                style={{width: '100%'}}
+                size="8"
+                onChange={e => setAddress(e.target.value)}
+                >
                 {disks[network] && disks[network].map(x =>
                   <option key={x.address} value={x.address}>
                     {x.label} ({x.address})
@@ -101,10 +121,11 @@ function App() {
                 )}
               </select>
               <div style={{marginTop: 10}}>
-                <Button color="primary">
-                  Create Disk
+                <Button color="primary" disabled={deployBusy} onClick={() => setShowCreateDisk(true)}>
+                  Create Disk{' '}
+                  {deployBusy && <Spinner size="sm" />}
                 </Button>{' '}
-                <Button color="primary" disabled={!address} onClick={loadDisk}>
+                <Button color="primary" disabled={!address} onClick={handleLoadDisk}>
                   Load Disk
                 </Button>
               </div>
@@ -132,8 +153,48 @@ function App() {
 
       <footer className="py-5 bg-dark">
       </footer>
+
+      <CreateDisk
+        isOpen={showCreateDisk}
+        toggle={() => setShowCreateDisk()}
+        onOk={handleCreateDisk}
+      />
     </div>
   );
+}
+
+function CreateDisk({isOpen, toggle, onOk}) {
+  const [name, setName] = useState('')
+  function handleOk(e) {
+    e.preventDefault()
+    if (name === '') return
+    toggle()
+    onOk(name)
+  }
+  return (
+    <Modal isOpen={isOpen} toggle={toggle} centered>
+      <ModalHeader toggle={toggle}>Create Disk</ModalHeader>
+      <ModalBody>
+        <Form onSubmit={handleOk}>
+          <FormGroup>
+            <Input
+              type="text"
+              value={name}
+              placeholder="Enter a disk label"
+              onChange={e => setName(e.target.value)}
+              spellCheck="false"
+            />
+          </FormGroup>
+        </Form>
+      </ModalBody>
+      <ModalFooter>
+        <Button color="primary" onClick={handleOk} disabled={name === ''}>
+          OK
+        </Button>{' '}
+        <Button color="secondary" onClick={toggle}>Cancel</Button>
+      </ModalFooter>
+    </Modal>
+  )
 }
 
 export default App;
