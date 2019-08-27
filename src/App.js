@@ -1,11 +1,12 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import {useRoutes} from 'hookrouter'
+import Home from './Home'
+import Explore from './Explore'
 
-function App() {
-  return (
-    <div className="App">
-    </div>
-  );
+const routes = {
+  '/': () => <Home />,
+  '/explore/:address': ({address}) => <Explore address={address} />,
 }
 
-export default App;
+const App = () => useRoutes(routes)
+export default App
