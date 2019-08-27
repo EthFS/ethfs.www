@@ -10,6 +10,7 @@ import {useAsync} from 'react-async-hook'
 import './Home.css'
 import useEth from './web3/eth'
 import deploy from './web3/deploy'
+import useLocalStorage from './localStorage'
 
 function App() {
   const [collapsed, setCollapsed] = useState(true)
@@ -20,7 +21,7 @@ function App() {
     if (!eth) return
     setNetwork(await eth.net.getNetworkType())
   }, [eth])
-  const [disks, setDisks] = useState({
+  const [disks, setDisks] = useLocalStorage('disks', {
     rinkeby: [
       {
         label: 'Public disk',
