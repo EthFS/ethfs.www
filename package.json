@@ -2,7 +2,9 @@
   "name": "ethfs.www",
   "version": "0.1.0",
   "dependencies": {
+    "ethfsplorer": "^0.1.0",
     "hookrouter": "^1.2.3",
+    "lodash": "^4.17.15",
     "react": "^16.9.0",
     "react-async-hook": "^3.4.0",
     "react-dom": "^16.9.0",
