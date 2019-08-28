@@ -140,6 +140,11 @@ function App() {
               <p>
                 Quickstart: Select <i>Public disk</i> from the list below and then click <i>Load Disk</i>.
               </p>
+              {network === 'main' &&
+                <p>
+                  N.B. mainnet contracts have not been deployed. Please switch to a public testnet.
+                </p>
+              }
               <p>
                 Current network: {network}
               </p>
