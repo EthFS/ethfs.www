@@ -6,26 +6,38 @@ import {
   Collapse, Navbar, NavbarBrand, NavbarToggler,
   Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap'
-import {useAsync} from 'react-async-hook'
 import './Home.css'
-import useEth from './web3/eth'
 import deploy from './web3/deploy'
+import useNetwork from './web3/network'
 import useLocalStorage from './localStorage'
 
 function App() {
   const [collapsed, setCollapsed] = useState(true)
   const [address, setAddress] = useState()
-  const eth = useEth()
-  const [network, setNetwork] = useState('')
-  useAsync(async () => {
-    if (!eth) return
-    setNetwork(await eth.net.getNetworkType())
-  }, [eth])
+  const network = useNetwork()
   const [disks, setDisks] = useLocalStorage('disks', {
+    ropsten: [
+      {
+        label: 'Public disk',
+        address: '0x6437C778Ed9B63A0FD89F82ca8c04080B445FBf1',
+      },
+    ],
     rinkeby: [
       {
         label: 'Public disk',
-        address: '0x5Cf933FA84CBada4D17f4CAC9278BF3A1a09c741',
+        address: '0x6437C778Ed9B63A0FD89F82ca8c04080B445FBf1',
+      },
+    ],
+    goerli: [
+      {
+        label: 'Public disk',
+        address: '0x6437C778Ed9B63A0FD89F82ca8c04080B445FBf1',
+      },
+    ],
+    kovan: [
+      {
+        label: 'Public disk',
+        address: '0x6437C778Ed9B63A0FD89F82ca8c04080B445FBf1',
       },
     ],
   })
