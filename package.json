@@ -1,7 +1,6 @@
 {
   "name": "ethfs.www",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "hookrouter": "^1.2.3",
     "react": "^16.9.0",
