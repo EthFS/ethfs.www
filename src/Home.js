@@ -42,8 +42,26 @@ function App() {
     } catch (e) {}
     setDeployBusy(false)
   }
+  const [showAddDisk, setShowAddDisk] = useState(false)
+  function handleAddDisk(label, address) {
+    setDisks({
+      ...disks,
+      [network]: [...disks[network], {label, address}]
+    })
+  }
   function handleLoadDisk() {
     window.location = `/explore/${address}`
+  }
+  function handleRemoveDisk() {
+    const disks2 = [...disks[network]]
+    const index = disks2.findIndex(x => x.address === address)
+    if (index < 0) return
+    disks2.splice(index, 1)
+    setDisks({
+      ...disks,
+      [network]: disks2
+    })
+    setAddress()
   }
   return (
     <div id="page-top">
@@ -88,7 +106,7 @@ function App() {
                 Why might this be a good idea?
               </p>
               <ul>
-                <li>Uncensorable, anonymous, immutable disk storage</li>
+                <li>Uncensorable, anonymous and immutable disk storage</li>
                 <li>Easily share files with others or the wider public</li>
                 <li>Directories are supported</li>
                 <li>Set permissions on files to control who can read or write to them (N.B. data is never truly hidden as the Ethereum blockchain is a publicly readable data structure)</li>
@@ -108,6 +126,9 @@ function App() {
                 Create your own disk or use an existing public disk.
               </p>
               <p>
+                Quickstart: Select <i>Public disk</i> from the list below and then click <i>Load Disk</i>.
+              </p>
+              <p>
                 Current network: {network}
               </p>
               <select
@@ -125,6 +146,12 @@ function App() {
                 <Button color="primary" disabled={deployBusy} onClick={() => setShowCreateDisk(true)}>
                   Create Disk{' '}
                   {deployBusy && <Spinner size="sm" />}
+                </Button>{' '}
+                <Button color="primary" onClick={() => setShowAddDisk(true)}>
+                  Add Disk
+                </Button>{' '}
+                <Button color="primary" disabled={!address} onClick={handleRemoveDisk}>
+                  Remove Disk
                 </Button>{' '}
                 <Button color="primary" disabled={!address} onClick={handleLoadDisk}>
                   Load Disk
@@ -160,6 +187,11 @@ function App() {
         toggle={() => setShowCreateDisk()}
         onOk={handleCreateDisk}
       />
+      <AddDisk
+        isOpen={showAddDisk}
+        toggle={() => setShowAddDisk()}
+        onOk={handleAddDisk}
+      />
     </div>
   );
 }
@@ -190,6 +222,52 @@ function CreateDisk({isOpen, toggle, onOk}) {
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={handleOk} disabled={name === ''}>
+          OK
+        </Button>{' '}
+        <Button color="secondary" onClick={toggle}>Cancel</Button>
+      </ModalFooter>
+    </Modal>
+  )
+}
+
+function AddDisk({isOpen, toggle, onOk}) {
+  const [name, setName] = useState('')
+  const [address, setAddress] = useState('')
+  function handleOk(e) {
+    e.preventDefault()
+    if (name === '' || address === '') return
+    toggle()
+    onOk(name, address)
+  }
+  return (
+    <Modal isOpen={isOpen} toggle={toggle} centered>
+      <ModalHeader toggle={toggle}>Add Disk</ModalHeader>
+      <ModalBody>
+        <Form onSubmit={handleOk}>
+          <FormGroup>
+            <Input
+              type="text"
+              value={name}
+              placeholder="Enter a disk label"
+              onChange={e => setName(e.target.value)}
+              onKeyUp={e => e.key === 'Enter' && handleOk(e)}
+              spellCheck="false"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Input
+              type="text"
+              value={address}
+              placeholder="Enter disk address"
+              onChange={e => setAddress(e.target.value)}
+              onKeyUp={e => e.key === 'Enter' && handleOk(e)}
+              spellCheck="false"
+            />
+          </FormGroup>
+        </Form>
+      </ModalBody>
+      <ModalFooter>
+        <Button color="primary" onClick={handleOk} disabled={name === '' || address === ''}>
           OK
         </Button>{' '}
         <Button color="secondary" onClick={toggle}>Cancel</Button>
