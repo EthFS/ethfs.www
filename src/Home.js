@@ -170,8 +170,8 @@ function App() {
               <p className="lead">
                 Access the source code on GitHub:
               </p>
-                <li><a href="https://github.com/hectorchu/ethfs">Smart contracts</a></li>
-                <li><a href="https://github.com/hectorchu/ethfsplorer">Ethfsplorer component</a></li>
+                <li><a href="https://github.com/EthFS/ethfs">Smart contracts</a></li>
+                <li><a href="https://github.com/EthFS/ethfsplorer">Ethfsplorer component</a></li>
               <ul>
               </ul>
             </Col>
