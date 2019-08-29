@@ -2,8 +2,8 @@ import contract from 'truffle-contract'
 
 export default async function deploy() {
   const {ethereum, web3} = window
-  const FsDisk = contract(require('../artifacts/FsDisk'))
-  const Kernel = contract(require('../artifacts/Kernel'))
+  const FsDisk = contract(require('ethfs/build/contracts/FsDisk'))
+  const Kernel = contract(require('ethfs/build/contracts/KernelImpl'))
   FsDisk.setProvider(ethereum || web3.currentProvider)
   Kernel.setProvider(ethereum || web3.currentProvider)
   if (ethereum) await ethereum.enable()
