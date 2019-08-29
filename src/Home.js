@@ -123,6 +123,7 @@ function App() {
                 <li>Directories are supported</li>
                 <li>Set permissions on files to control who can read or write to them (N.B. data is never truly hidden as the Ethereum blockchain is a publicly readable data structure)</li>
                 <li>Pay only for what you write; zero cost for ongoing storage and read access</li>
+                <li>Files are accessible by other smart contracts</li>
               </ul>
             </Col>
           </Row>
@@ -145,9 +146,11 @@ function App() {
                   N.B. mainnet contracts have not been deployed. Please switch to a public testnet.
                 </p>
               }
-              <p>
-                Current network: {network}
-              </p>
+              {network ?
+                <p>Current network: {network}</p>
+                :
+                <p>No network detected. You need a web3 provider such as <a href="https://metamask.io/">MetaMask</a>.</p>
+              }
               <select
                 style={{width: '100%'}}
                 size="8"
