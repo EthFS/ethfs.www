@@ -4475,10 +4475,10 @@ ethfs@^0.1.1:
     truffle-hdwallet-provider "^1.0.17"
     yargs "^14.0.0"
 
-ethfsplorer@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/ethfsplorer/-/ethfsplorer-0.1.1.tgz#b7c536b99a2175e0df04965daa92a46b49a5f6af"
-  integrity sha512-lsuC5WYlb8m3NQszMq66MkgM+Y0ZC5HPyyO1ak1dt8MpyEUUGJvq1JC1vobHg292lbugkZsA8Hs5gPnlRwKrhQ==
+ethfsplorer@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/ethfsplorer/-/ethfsplorer-0.1.2.tgz#d6c61a14a923dcee7f4025f4ec505f1dbbcffd3a"
+  integrity sha512-4+WZMo0FxbiwX5enhxJG8tDf2fXa6GcjbtdPZi9L0SE/Wm9MJ9dLr4yKwWYuTExez3YwbJtXYYiDXFzDgnGUhA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.21"
     "@fortawesome/free-solid-svg-icons" "^5.10.1"
