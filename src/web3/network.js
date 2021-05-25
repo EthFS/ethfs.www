@@ -13,6 +13,9 @@ export default function useNetwork() {
         case 5:
           network = 'goerli'
           break
+        case 1666600000:
+          network = 'harmony'
+          break
         default:
       }
     }

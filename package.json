@@ -1,8 +1,8 @@
 {
   "name": "ethfs.www",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
-    "ethfs": "^0.1.1",
+    "ethfs": "^0.2.1",
     "ethfsplorer": "^0.1.2",
     "hookrouter": "^1.2.3",
     "lodash": "^4.17.15",

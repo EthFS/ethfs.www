@@ -16,28 +16,10 @@ function App() {
   const [address, setAddress] = useState()
   const network = useNetwork()
   const [disks, setDisks] = useLocalStorage('disks', {
-    ropsten: [
+    harmony: [
       {
         label: 'Public disk',
-        address: '0x6437C778Ed9B63A0FD89F82ca8c04080B445FBf1',
-      },
-    ],
-    rinkeby: [
-      {
-        label: 'Public disk',
-        address: '0x6437C778Ed9B63A0FD89F82ca8c04080B445FBf1',
-      },
-    ],
-    goerli: [
-      {
-        label: 'Public disk',
-        address: '0x6437C778Ed9B63A0FD89F82ca8c04080B445FBf1',
-      },
-    ],
-    kovan: [
-      {
-        label: 'Public disk',
-        address: '0x6437C778Ed9B63A0FD89F82ca8c04080B445FBf1',
+        address: '0x5049D3e077db2B75F9e06344699210Cfe40cc6cc',
       },
     ],
   })
