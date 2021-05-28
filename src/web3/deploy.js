@@ -1,4 +1,4 @@
-import contract from 'truffle-contract'
+import contract from '@truffle/contract'
 
 export default async function deploy() {
   const {ethereum, web3} = window

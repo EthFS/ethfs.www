@@ -11,6 +11,8 @@ import deploy from './web3/deploy'
 import useNetwork from './web3/network'
 import useLocalStorage from './localStorage'
 
+const Kernel = require('ethfs/build/contracts/KernelImpl')
+
 function App() {
   const [collapsed, setCollapsed] = useState(true)
   const [address, setAddress] = useState()
@@ -19,7 +21,7 @@ function App() {
     harmony: [
       {
         label: 'Public disk',
-        address: '0x5049D3e077db2B75F9e06344699210Cfe40cc6cc',
+        address: Kernel.networks['1666600000'].address,
       },
     ],
   })
