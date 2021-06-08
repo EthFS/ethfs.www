@@ -1,25 +1,22 @@
 import {useState} from 'react'
 import {useAsync} from 'react-async-hook'
-import useEth from './eth'
+import useProvider from './provider'
 
 export default function useNetwork() {
   const [network, setNetwork] = useState('')
-  const eth = useEth()
+  const provider = useProvider()
   useAsync(async () => {
-    if (!eth) return
-    let network = await eth.net.getNetworkType()
-    if (network === 'private') {
-      switch (await eth.net.getId()) {
-        case 5:
-          network = 'goerli'
-          break
-        case 1666600000:
-          network = 'harmony'
-          break
-        default:
-      }
+    if (!provider) return
+    const {chainId} = await provider.getNetwork()
+    switch (chainId) {
+    case 1666600000:
+      setNetwork('harmony-s0')
+      break
+    case 1666600001:
+      setNetwork('harmony-s1')
+      break
+    default:
     }
-    setNetwork(network)
-  }, [eth])
+  }, [provider])
   return network
 }

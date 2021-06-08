@@ -9,6 +9,7 @@ import {
 import './Home.css'
 import deploy from './web3/deploy'
 import useNetwork from './web3/network'
+import useProvider from './web3/provider'
 import useLocalStorage from './localStorage'
 
 const Kernel = require('ethfs/build/contracts/KernelImpl')
@@ -17,11 +18,12 @@ function App() {
   const [collapsed, setCollapsed] = useState(true)
   const [address, setAddress] = useState()
   const network = useNetwork()
+  const provider = useProvider()
   const [disks, setDisks] = useLocalStorage('disks', {
-    harmony: [
+    'harmony-s1': [
       {
         label: 'Public disk',
-        address: Kernel.networks['1666600000'].address,
+        address: Kernel.networks['1666600001'].address,
       },
     ],
   })
@@ -30,7 +32,7 @@ function App() {
   async function handleCreateDisk(label) {
     setDeployBusy(true)
     try {
-      const address = await deploy()
+      const address = await deploy(provider)
       setDisks({
         ...disks,
         [network]: [...disks[network], {label, address}]
