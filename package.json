@@ -4,7 +4,7 @@
   "dependencies": {
     "@ethersproject/contracts": "^5.3.0",
     "@ethersproject/providers": "^5.3.0",
-    "ethfs": "^0.2.7",
+    "ethfs": "^0.2.8",
     "ethfsplorer": "^0.1.7",
     "hookrouter": "^1.2.3",
     "lodash": "^4.17.15",

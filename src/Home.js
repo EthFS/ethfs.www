@@ -6,6 +6,7 @@ import {
   Collapse, Navbar, NavbarBrand, NavbarToggler,
   Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap'
+import {mapValues} from 'lodash'
 import './Home.css'
 import deploy from './web3/deploy'
 import useNetwork from './web3/network'
@@ -13,20 +14,14 @@ import useProvider from './web3/provider'
 import useLocalStorage from './localStorage'
 
 const Kernel = require('ethfs/build/contracts/KernelImpl')
+const publicDisks = mapValues(Kernel.networks, ({address}) => [{label: 'Public disk', address}])
 
 function App() {
   const [collapsed, setCollapsed] = useState(true)
   const [address, setAddress] = useState()
-  const network = useNetwork()
+  const {chainId, name: network} = useNetwork()
   const provider = useProvider()
-  const [disks, setDisks] = useLocalStorage('disks', {
-    'harmony-s1': [
-      {
-        label: 'Public disk',
-        address: Kernel.networks['1666600001'].address,
-      },
-    ],
-  })
+  const [disks, setDisks] = useLocalStorage('disks', publicDisks)
   const [showCreateDisk, setShowCreateDisk] = useState(false)
   const [deployBusy, setDeployBusy] = useState(false)
   async function handleCreateDisk(label) {
@@ -35,7 +30,7 @@ function App() {
       const address = await deploy(provider)
       setDisks({
         ...disks,
-        [network]: [...disks[network], {label, address}]
+        [chainId]: [...disks[chainId], {label, address}]
       })
     } catch (e) {}
     setDeployBusy(false)
@@ -44,20 +39,20 @@ function App() {
   function handleAddDisk(label, address) {
     setDisks({
       ...disks,
-      [network]: [...disks[network], {label, address}]
+      [chainId]: [...disks[chainId], {label, address}]
     })
   }
   function handleLoadDisk() {
     window.location = `/explore/${address}`
   }
   function handleRemoveDisk() {
-    const disks2 = [...disks[network]]
+    const disks2 = [...disks[chainId]]
     const index = disks2.findIndex(x => x.address === address)
     if (index < 0) return
     disks2.splice(index, 1)
     setDisks({
       ...disks,
-      [network]: disks2
+      [chainId]: disks2
     })
     setAddress()
   }
@@ -127,11 +122,6 @@ function App() {
               <p>
                 Quickstart: Select <i>Public disk</i> from the list below and then click <i>Load Disk</i>.
               </p>
-              {network === 'main' &&
-                <p>
-                  N.B. mainnet contracts have not been deployed. Please switch to a public testnet.
-                </p>
-              }
               {network ?
                 <p>Current network: {network}</p>
                 :
@@ -142,14 +132,14 @@ function App() {
                 size="8"
                 onChange={e => setAddress(e.target.value)}
                 >
-                {disks[network] && disks[network].map(x =>
+                {disks[chainId] && disks[chainId].map(x =>
                   <option key={x.address} value={x.address}>
                     {x.label} ({x.address})
                   </option>
                 )}
               </select>
               <div style={{marginTop: 10}}>
-                <Button color="primary" disabled={deployBusy} onClick={() => setShowCreateDisk(true)}>
+                <Button color="primary" disabled={!network || network === 'unknown' || deployBusy} onClick={() => setShowCreateDisk(true)}>
                   Create Disk{' '}
                   {deployBusy && <Spinner size="sm" />}
                 </Button>{' '}

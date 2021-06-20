@@ -4891,10 +4891,10 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-ethfs@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/ethfs/-/ethfs-0.2.7.tgz#9e9d20bd19b3e5f4e131e5104d1e373484475481"
-  integrity sha512-AlBXGxkjVYs8OVnihEiPzz9xOIiwog092PFoEuLV/PsnrAp9m2exAyH/kvk1NLMBXez8AXhkCb3UY9Yuoj+Hag==
+ethfs@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/ethfs/-/ethfs-0.2.8.tgz#1fba5d425719148c81262470d628e6b7de812f1a"
+  integrity sha512-opW6126em9bje8AF0vUyWbVY7MMy/7ZIIVCrit/sb80atcD1vadVBE0qvJ9jgsbqQF22sbKMyYn2MePkWBYUFw==
 
 ethfsplorer@^0.1.7:
   version "0.1.7"
