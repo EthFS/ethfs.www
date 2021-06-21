@@ -5,6 +5,7 @@ export default function useProvider() {
   const [provider, setProvider] = useState()
   const {ethereum} = window
   useEffect(() => {
+    if (!ethereum) return setProvider()
     setProvider(new Web3Provider(ethereum))
     ethereum.on('chainChanged', () => {
       setProvider(new Web3Provider(ethereum))
