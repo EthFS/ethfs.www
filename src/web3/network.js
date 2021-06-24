@@ -16,6 +16,12 @@ export default function useNetwork() {
     case 1666600001:
       name = 'harmony-s1'
       break
+    case 1666600002:
+      name = 'harmony-s2'
+      break
+    case 1666600003:
+      name = 'harmony-s3'
+      break
     default:
     }
     setNetwork({chainId, name})
