@@ -6,6 +6,7 @@ import {
   Collapse, Navbar, NavbarBrand, NavbarToggler,
   Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap'
+import {navigate} from 'hookrouter'
 import {mapValues} from 'lodash'
 import './Home.css'
 import deploy from './web3/deploy'
@@ -43,7 +44,7 @@ function App() {
     })
   }
   function handleLoadDisk() {
-    window.location = `/explore/${address}`
+    navigate(`/explore/${address}`)
   }
   function handleRemoveDisk() {
     const disks2 = [...disks[chainId]]

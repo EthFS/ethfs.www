@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {setBasepath} from 'hookrouter';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+const pkg = require('../package.json');
+
+if (pkg.homepage) setBasepath(pkg.homepage);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
